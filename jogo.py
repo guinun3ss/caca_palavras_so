@@ -1,36 +1,35 @@
 from random import choice
-from configuracoes import TAMANHO_GRADE, LETRAS
+from configuracoes import TAMANHO_MATRIZ, LETRAS
 
 def gerar_matriz():
-    # cada linha é uma seleção aleatória de LETRAS do módulo configuracoes
-    matriz = [[choice(LETRAS) for i in range(TAMANHO_GRADE)]
-              for j in range(TAMANHO_GRADE)]
+    # cada linha da matriz é um list comprehension da constante LETRAS
+    matriz = [[choice(LETRAS) for i in range(TAMANHO_MATRIZ)]
+              for j in range(TAMANHO_MATRIZ)]
     return matriz
 
-# retorna um booleano a partir da comparação da palavra
-# com o lugar que ela vai ficar na matriz
+# aqui o resultado deve ser um booleano para confirmar a adição
 def cabe_na_matriz(palavra, direcao, linha, coluna):
     if direcao == "horizontal":
-        return coluna + len(palavra) <= TAMANHO_GRADE
+        return coluna + len(palavra) <= TAMANHO_MATRIZ
     if direcao == "vertical":
-        return linha + len(palavra) <= TAMANHO_GRADE
+        return linha + len(palavra) <= TAMANHO_MATRIZ
     return False
 
+# e aqui a palavra é de fato adicionada à matriz
 def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
     if not cabe_na_matriz(palavra, direcao, linha, coluna):
-        return # se não couber na matriz, a função encerra aqui
+        return 
     
     for i, letra in enumerate(palavra):
-        if direcao == "horizontal": # aqui as colunas são percorridas
+        if direcao == "horizontal":
+            # percorre as colunas de uma em uma
             matriz[linha][coluna + i] = letra
-        elif direcao == "vertical": # aqui as linhas são percorridas
+        elif direcao == "vertical":
+            # percorre as linhas de uma em uma
             matriz[linha + i][coluna] = letra
 
-# aqui é só para fazer as chamadas de adicionar_palavra
-# é só uma questão de organização, para facilitar a manutenção
+# a posição deve ser calculada para evitar a sobreposição das palavras
 def posicionar_palavras(matriz):
-    # as palavras não podem se cruzar porque suas letras vão se sobrepor
-    # a posição de cada uma deve ser calculada para evitar esse problema
     adicionar_palavra(matriz, "HARDWARE", "horizontal", 0, 0)
     adicionar_palavra(matriz, "MEMÓRIA", "vertical", 14, 10)
     adicionar_palavra(matriz, "BARRAMENTO", "horizontal", 2, 12)

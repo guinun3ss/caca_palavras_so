@@ -5,54 +5,49 @@ from jogo import gerar_matriz, posicionar_palavras
 class Jogo:
     def __init__(self, janela):
         self.janela = janela
-        # nome que aparece parte superior da janela
         self.janela.title("Caça-Palavras Temático")
-
-        # para manipular os movimentos do mouse
+        
+        # o Canvas ajuda na manipulação dos movimentos do mouse
         self.canvas = tk.Canvas(janela, width=LARGURA_JANELA,
                                 height=ALTURA_JANELA, bg=COR_FUNDO)
-        self.canvas.pack() # adiciona o canvas à janela
+        self.canvas.pack() # e o pack coloca tudo na janela
 
         self.matriz = gerar_matriz()
         posicionar_palavras(self.matriz)
 
-        # guarda as células com as palavras selecionadas corretamente
-        self.celulas_destacadas = {}
+        self.celulas_destacadas = {} # palavras selecionadas corretamente
+        self.celulas_selecionadas = [] # palavras selecionadas temporariamente
+        self.selecionada = False # só é True quando o o botão do mouse é pressionado
 
-        # guardar as células selecionadas temporariamente
-        self.celulas_selecionadas = []
-        self.selecionada = False # só é True quando pressiona o botão do mouse
-
-        # coordendas da célula selecionada
+        # coordenadas das células selecionadas
         self.inicio = None
         self.fim = None
 
-        # manipulação dos eventos do mouse
-        self.canvas.bind("<ButtonPress-1>", self.mouse_down)
-        self.canvas.bind("<B1-Motion>", self.mouse_move)
-        self.canvas.bind("<ButtonRelease-1>", self.mouse_up)
+        # aqui são manipuladas as açoes feitas com o mouse
+        self.canvas.bind("<ButtonPress-1>", self.clique_mouse) # quando o botão é pressionado
+        self.canvas.bind("<B1-Motion>", self.movimento_mouse) # quando o ponteiro é movido
+        self.canvas.bind("<ButtonRelease-1>", self.soltar_botao_mouse) # quando o botão é solto
 
         self.desenhar()
 
-        # métodos de desenho da tela
-    def desenhar(self):
+    def desenhar(self): # renderização do estado atual do jogo
         self.canvas.delete("all")
 
-        # desenho das células vazias
-        for l in range(TAMANHO_GRADE):
-            for c in range(TAMANHO_GRADE):
+        # um quadrado é desenhado na grade para cada célula
+        for l in range(TAMANHO_MATRIZ):
+            for c in range(TAMANHO_MATRIZ):
                 self.desenhar_celula(l, c, None)
 
-        # destacar palavras encontradas
+        # aqui as palavras corretas são destacadas e sobrescritas
         for(l,c), cor in self.celulas_destacadas.items():
             self.desenhar_celula(l, c, cor)
             
-        # destacar temporariamente as células selecionadas
+        # aqui as células selecionadas são destacadas temporariamente
         for l, c in self.celulas_selecionadas:
             self.desenhar_celula(l, c, COR_SELECAO)
 
     # desenhar o contorno da célula
-    def desenhar_celula(self, linha, coluna, fill):
+    def desenhar_celula(self, linha, coluna, preenchimento):
         x1 = MARGEM + coluna * TAMANHO_CELULA
         y1 = MARGEM + linha * TAMANHO_CELULA
         x2 = x1 + TAMANHO_CELULA
@@ -60,9 +55,9 @@ class Jogo:
 
         self.canvas.create_rectangle(x1, y1, x2, y2,
                                      outline=COR_CONTORNO,
-                                     fill=fill if fill else "")
+                                     fill=preenchimento if preenchimento else "")
             
-        # formatação do texto da grade
+        # formatação do texto da MATRTAMANHO_MATRIZ
         self.canvas.create_text((x1 + x2) // 2, (y1 + y2) // 2,
                                 text=self.matriz[linha][coluna],
                                 fill=COR_TEXTO, font=("Arial", 12, "bold"))
@@ -72,8 +67,8 @@ class Jogo:
         coluna = (x - MARGEM) // TAMANHO_CELULA
         linha = (y - MARGEM) // TAMANHO_CELULA
 
-        #garantir que o clique está na grade
-        if 0 <= linha < TAMANHO_GRADE and 0 <= coluna < TAMANHO_GRADE:
+        #garantir que o clique está na MATRTAMANHO_MATRIZ
+        if 0 <= linha < TAMANHO_MATRIZ and 0 <= coluna < TAMANHO_MATRIZ:
             return linha, coluna
         return None
         
@@ -93,7 +88,7 @@ class Jogo:
                 self.celulas_selecionadas.append(l, ci)
 
         # eventos do mouse
-    def mouse_down(self, event): # iniciar a seleção e marcar o ponto inicial
+    def clique_mouse(self, event): # iniciar a seleção e marcar o ponto inicial
         celula = self.posicao_para_celula(event.x, event.y)
                 
         if celula:
@@ -102,7 +97,7 @@ class Jogo:
             self.celulas_selecionadas.clear()
             self.desenhar()
 
-    def mouse_move(self, event):
+    def movimento_mouse(self, event):
         if not self.selecionada:
             return # encerra aqui se não tiver nada selecionado
                 
@@ -113,7 +108,7 @@ class Jogo:
             self.atualizar_selecao()
             self.desenhar()
 
-    def mouse_up(self, event):
+    def soltar_botao_mouse(self, event):
         self.selecionada = False
         palavra = "".join(self.matriz[l][c] for l, c in self.celulas_selecionadas)
 
