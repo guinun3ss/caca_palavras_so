@@ -6,14 +6,25 @@ class Jogo:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Caça-Palavras Temático")
+
+        # dividir a tela entre a matriz e o texto
+        frame_principal = tk.Frame(janela)
+        frame_principal.pack()
         
         # o Canvas ajuda na manipulação dos movimentos do mouse
-        self.canvas = tk.Canvas(janela, width=LARGURA_JANELA,
+        self.canvas = tk.Canvas(frame_principal, width=LARGURA_JANELA,
                                 height=ALTURA_JANELA, bg=COR_FUNDO)
-        self.canvas.pack() # e o pack coloca tudo na janela
+        self.canvas.pack(side="left") # e o pack coloca tudo na janela
 
         self.matriz = gerar_matriz()
-        posicionar_palavras(self.matriz)
+        self.lista_palavras = posicionar_palavras(self.matriz)
+
+        # exibir palavras a serem encontradas no jogo
+        palavras_jogo = "\n".join(self.lista_palavras)
+        self.palavras_exibidas = tk.Label(frame_principal, text=palavras_jogo,
+                                          justify="center", font=("Arial", 12),
+                                          wraplength=200)
+        self.palavras_exibidas.pack(side="right", padx=10)
 
         self.celulas_destacadas = {} # palavras selecionadas corretamente
         self.celulas_selecionadas = [] # palavras selecionadas temporariamente
@@ -32,6 +43,26 @@ class Jogo:
 
     def desenhar(self): # renderização do estado atual do jogo
         self.canvas.delete("all")
+
+        # desenhar os números fora da grade
+        # NÃO FAZ PARTE DO JOGO, APAGAR DEPOIS
+        for c in range(TAMANHO_MATRIZ):
+            x = MARGEM + c * TAMANHO_CELULA + TAMANHO_CELULA // 2
+            y = MARGEM // 2   # posição acima da grade
+            self.canvas.create_text(x, y, text=str(c), font=("Arial", 10, "bold"), fill="black")
+
+        for l in range(TAMANHO_MATRIZ):
+            x = MARGEM // 2   # posição à esquerda da grade
+            y = MARGEM + l * TAMANHO_CELULA + TAMANHO_CELULA // 2
+            self.canvas.create_text(x, y, text=str(l), font=("Arial", 10, "bold"), fill="black")
+
+        for l in range(TAMANHO_MATRIZ):
+            x = MARGEM // 2
+            y = MARGEM + l * TAMANHO_CELULA + TAMANHO_CELULA // 2
+
+            self.canvas.create_text(x, y, text=str(l),
+                                     font=("Arial", 10, "bold"),
+                                     fill="black")
 
         # um quadrado é desenhado na grade para cada célula
         for l in range(TAMANHO_MATRIZ):

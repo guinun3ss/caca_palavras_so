@@ -20,4 +20,8 @@ LETRAS = ["A", "Á", "Â", "Ã", "À", "B", "C", "D", "E", "É",
 
 PALAVRAS = {"PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
             "DISCO", "TECLADO", "MOUSE", "MONITOR",
-            "GABINETE", "COOLER", "BARRAMENTO", "SLOT"}
+            "GABINETE", "COOLER", "BARRAMENTO", "SLOT",
+            "VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
+            "MACINTOSH", "MAINFRAME", "ASSEMBLY",
+            "MICROPROCESSADOR", "APPLE", "FORTRAN",
+            "WINDOWS", "GUI"}

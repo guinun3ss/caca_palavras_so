@@ -29,7 +29,11 @@ def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
             matriz[linha + i][coluna] = letra
 
 # variações dos jogos que serão escolhidas aleatoriamente
-def jogo_verao_hardware(matriz):
+def jogo_versao_hardware(matriz):
+    palavras_procuradas = ["Tema: Hardware\n", "PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
+                           "DISCO", "TECLADO", "MOUSE", "MONITOR", "GABINETE", "COOLER",
+                           "BARRAMENTO", "SLOT"]
+
     adicionar_palavra(matriz, "PLACA", "horizontal", 0, 0)
     adicionar_palavra(matriz, "FONTE", "vertical", 0, 6)
     adicionar_palavra(matriz, "MEMÓRIA", "horizontal", 2, 10)
@@ -42,9 +46,31 @@ def jogo_verao_hardware(matriz):
     adicionar_palavra(matriz, "COOLER", "vertical", 15, 22)
     adicionar_palavra(matriz, "BARRAMENTO", "horizontal", 18, 5)
     adicionar_palavra(matriz, "SLOT", "vertical", 20, 9)
+
+    return palavras_procuradas
+
+def jogo_versao_historia(matriz):
+    palavras_procuradas = ["Tema: História do Computador\n", "VÁLVULA", "ENIAC", "TRANSISTOR",
+                           "UNIX", "MACINTOSH", "MAINFRAME", "ASSEMBLY", "MICROPROCESSADOR",
+                           "APPLE", "FORTRAN", "WINDOWS", "GUI"]
+    
+    adicionar_palavra(matriz, "VÁLVULA", "horizontal", 2, 3)
+    adicionar_palavra(matriz, "ENIAC", "vertical", 1, 10)
+    adicionar_palavra(matriz, "TRANSISTOR", "horizontal", 6, 1)
+    adicionar_palavra(matriz, "UNIX", "vertical", 3, 15)
+    adicionar_palavra(matriz, "MACINTOSH", "horizontal", 7, 6)
+    adicionar_palavra(matriz, "MAINFRAME", "vertical", 1, 18)
+    adicionar_palavra(matriz, "ASSEMBLY", "horizontal", 9, 12)
+    adicionar_palavra(matriz, "MICROPROCESSADOR", "vertical", 4, 7)
+    adicionar_palavra(matriz, "APPLE", "horizontal", 12, 20)
+    adicionar_palavra(matriz, "FORTRAN", "vertical", 6, 22)
+    adicionar_palavra(matriz, "WINDOWS", "horizontal", 15, 4)
+    adicionar_palavra(matriz, "GUI", "vertical", 8, 2)
+
+    return palavras_procuradas
     
 # aqui o tema é escolhido aleatoriamente
 def posicionar_palavras(matriz):
-    variacoes = [jogo_verao_hardware]
+    variacoes = [jogo_versao_hardware, jogo_versao_historia]
     versao = choice(variacoes)
-    versao(matriz)
+    return versao(matriz)
