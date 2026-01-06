@@ -18,7 +18,6 @@ LETRAS = ["A", "Á", "Â", "Ã", "À", "B", "C", "D", "E", "É",
           "N", "O", "Ó", "Ô", "Õ", "P", "Q", "R", "S", "T",
           "U", "Ú", "V", "W", "X", "Y", "Z"]
 
-PALAVRAS = {"HARDWARE", "MEMÓRIA", "BARRAMENTO", "MAINFRAME",
-            "COMPUTADOR", "ENIAC", "VÁLVULA", "TRANSISTOR",
-            "UNIX", "PROCESSADOR", "LINUX", "MULTIPROGRAMAÇÃO",
-            "BINÁRIO", "GUI"}
+PALAVRAS = {"PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
+            "DISCO", "TECLADO", "MOUSE", "MONITOR",
+            "GABINETE", "COOLER", "BARRAMENTO", "SLOT"}
