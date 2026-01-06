@@ -85,7 +85,7 @@ class Jogo:
         elif ci == cf:
             passo = 1 if li <= lf else -1
             for l in range(li, lf + passo, passo):
-                self.celulas_selecionadas.append(l, ci)
+                self.celulas_selecionadas.append((l, ci))
 
         # eventos do mouse
     def clique_mouse(self, event): # iniciar a seleção e marcar o ponto inicial
@@ -110,14 +110,15 @@ class Jogo:
 
     def soltar_botao_mouse(self, event):
         self.selecionada = False
+
         palavra = "".join(self.matriz[l][c] for l, c in self.celulas_selecionadas)
 
-        if palavra in PALAVRAS:
+        if palavra in PALAVRAS or palavra[::-1] in PALAVRAS:
             for c in self.celulas_selecionadas:
                 # destacar a palavra encontrada permanentemente
                 self.celulas_destacadas[c] = COR_ACHADA
             print("Correto: ", palavra)
 
             # limpar as células selecionadas
-            self.celulas_selecionadas.clear()
-            self.desenhar() # ataualizar a tela
+        self.celulas_selecionadas.clear()
+        self.desenhar() # ataualizar a tela
