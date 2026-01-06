@@ -28,19 +28,23 @@ def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
             # percorre as linhas de uma em uma
             matriz[linha + i][coluna] = letra
 
-# a posição deve ser calculada para evitar a sobreposição das palavras
+# variações dos jogos que serão escolhidas aleatoriamente
+def jogo_verao_hardware(matriz):
+    adicionar_palavra(matriz, "PLACA", "horizontal", 0, 0)
+    adicionar_palavra(matriz, "FONTE", "vertical", 0, 6)
+    adicionar_palavra(matriz, "MEMÓRIA", "horizontal", 2, 10)
+    adicionar_palavra(matriz, "PROCESSADOR", "vertical", 1, 14)
+    adicionar_palavra(matriz, "DISCO", "horizontal", 5, 0)
+    adicionar_palavra(matriz, "TECLADO", "vertical", 7, 3)
+    adicionar_palavra(matriz, "MOUSE", "horizontal", 9, 8)
+    adicionar_palavra(matriz, "MONITOR", "vertical", 10, 18)
+    adicionar_palavra(matriz, "GABINETE", "horizontal", 14, 2)
+    adicionar_palavra(matriz, "COOLER", "vertical", 15, 22)
+    adicionar_palavra(matriz, "BARRAMENTO", "horizontal", 18, 5)
+    adicionar_palavra(matriz, "SLOT", "vertical", 20, 9)
+    
+# aqui o tema é escolhido aleatoriamente
 def posicionar_palavras(matriz):
-    adicionar_palavra(matriz, "HARDWARE", "horizontal", 0, 0)
-    adicionar_palavra(matriz, "MEMÓRIA", "vertical", 14, 10)
-    adicionar_palavra(matriz, "BARRAMENTO", "horizontal", 2, 12)
-    adicionar_palavra(matriz, "MAINFRAME", "vertical", 9, 23)
-    adicionar_palavra(matriz, "COMPUTADOR", "horizontal", 11, 4)
-    adicionar_palavra(matriz, "ENIAC", "horizontal", 12, 15)
-    adicionar_palavra(matriz, "VÁLVULA", "vertical", 13, 5)
-    adicionar_palavra(matriz, "TRANSISTOR", "vertical", 14, 18)
-    adicionar_palavra(matriz, "UNIX", "vertical", 19, 3)
-    adicionar_palavra(matriz, "PROCESSADOR", "horizontal", 3, 0)
-    adicionar_palavra(matriz, "LINUX", "horizontal", 4, 13)
-    adicionar_palavra(matriz, "MULTIPROGRAMAÇÃO", "horizontal", 6, 2)
-    adicionar_palavra(matriz, "BINÁRIO", "horizontal", 24, 4)
-    adicionar_palavra(matriz, "GUI", "horizontal", 9, 8)
+    variacoes = [jogo_verao_hardware]
+    versao = choice(variacoes)
+    versao(matriz)
