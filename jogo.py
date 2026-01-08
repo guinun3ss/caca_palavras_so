@@ -30,47 +30,27 @@ def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
 
 # variações dos jogos que serão escolhidas aleatoriamente
 def jogo_versao_hardware(matriz):
-    palavras_procuradas = ["Tema: Hardware\n", "PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
-                           "DISCO", "TECLADO", "MOUSE", "MONITOR", "GABINETE", "COOLER",
-                           "BARRAMENTO", "SLOT"]
-
-    adicionar_palavra(matriz, "PLACA", "horizontal", 0, 0)
-    adicionar_palavra(matriz, "FONTE", "vertical", 0, 6)
-    adicionar_palavra(matriz, "MEMÓRIA", "horizontal", 2, 10)
-    adicionar_palavra(matriz, "PROCESSADOR", "vertical", 1, 14)
-    adicionar_palavra(matriz, "DISCO", "horizontal", 5, 0)
-    adicionar_palavra(matriz, "TECLADO", "vertical", 7, 3)
-    adicionar_palavra(matriz, "MOUSE", "horizontal", 9, 8)
-    adicionar_palavra(matriz, "MONITOR", "vertical", 10, 18)
-    adicionar_palavra(matriz, "GABINETE", "horizontal", 14, 2)
-    adicionar_palavra(matriz, "COOLER", "vertical", 15, 22)
-    adicionar_palavra(matriz, "BARRAMENTO", "horizontal", 18, 5)
-    adicionar_palavra(matriz, "SLOT", "vertical", 20, 9)
-
-    return palavras_procuradas
-
-def jogo_versao_historia(matriz):
-    palavras_procuradas = ["Tema: História do Computador\n", "VÁLVULA", "ENIAC", "TRANSISTOR",
-                           "UNIX", "MACINTOSH", "MAINFRAME", "ASSEMBLY", "MICROPROCESSADOR",
-                           "APPLE", "FORTRAN", "WINDOWS", "GUI"]
+    palavras_procuradas = {"PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
+                           "DISCO", "TECLADO", "MOUSE", "MONITOR", 
+                           "GABINETE", "COOLER", "BARRAMENTO", "SLOT"}
     
-    adicionar_palavra(matriz, "VÁLVULA", "horizontal", 2, 3)
-    adicionar_palavra(matriz, "ENIAC", "vertical", 1, 10)
-    adicionar_palavra(matriz, "TRANSISTOR", "horizontal", 6, 1)
-    adicionar_palavra(matriz, "UNIX", "vertical", 3, 15)
-    adicionar_palavra(matriz, "MACINTOSH", "horizontal", 7, 6)
-    adicionar_palavra(matriz, "MAINFRAME", "vertical", 1, 18)
-    adicionar_palavra(matriz, "ASSEMBLY", "horizontal", 9, 12)
-    adicionar_palavra(matriz, "MICROPROCESSADOR", "vertical", 4, 7)
-    adicionar_palavra(matriz, "APPLE", "horizontal", 12, 20)
-    adicionar_palavra(matriz, "FORTRAN", "vertical", 6, 22)
-    adicionar_palavra(matriz, "WINDOWS", "horizontal", 15, 4)
-    adicionar_palavra(matriz, "GUI", "vertical", 8, 2)
+    adicionar_palavra(matriz, "PLACA", "vertical", 20, 20)
+    adicionar_palavra(matriz, "FONTE", "vertical", 1, 4)
+    adicionar_palavra(matriz, "MEMÓRIA", "horizontal", 15, 10)
+    adicionar_palavra(matriz, "PROCESSADOR", "horizontal", 2, 2)
+    adicionar_palavra(matriz, "DISCO", "horizontal", 23, 12)
+    adicionar_palavra(matriz, "TECLADO", "vertical", 0, 15)
+    adicionar_palavra(matriz, "MOUSE", "vertical", 12, 2)
+    adicionar_palavra(matriz, "MONITOR", "horizontal", 20, 3)
+    adicionar_palavra(matriz, "GABINETE", "horizontal", 10, 5)
+    adicionar_palavra(matriz, "COOLER", "horizontal", 10, 16)
+    adicionar_palavra(matriz, "BARRAMENTO", "vertical", 4, 20)
+    adicionar_palavra(matriz, "SLOT", "horizontal", 13, 0)
 
     return palavras_procuradas
     
 # aqui o tema é escolhido aleatoriamente
 def posicionar_palavras(matriz):
-    variacoes = [jogo_versao_hardware, jogo_versao_historia]
+    variacoes = [jogo_versao_hardware]
     versao = choice(variacoes)
     return versao(matriz)
