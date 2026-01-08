@@ -21,10 +21,15 @@ class Jogo:
 
         # exibir palavras a serem encontradas no jogo
         palavras_jogo = "\n".join(self.lista_palavras)
-        self.palavras_exibidas = tk.Label(frame_principal, text=palavras_jogo,
-                                          justify="center", font=("Arial", 12),
-                                          wraplength=200)
+        self.palavras_exibidas = tk.Text(frame_principal, wrap="word",
+                                        font=("Arial", 12), width=20,
+                                        height=len(self.lista_palavras))
         self.palavras_exibidas.pack(side="right", padx=10)
+
+        for palavra in self.lista_palavras:
+            self.palavras_exibidas.insert("end", palavra + "\n")
+
+        self.palavras_exibidas.config(state="disabled")
 
         self.celulas_destacadas = {} # palavras selecionadas corretamente
         self.celulas_selecionadas = [] # palavras selecionadas temporariamente
@@ -148,8 +153,23 @@ class Jogo:
             for c in self.celulas_selecionadas:
                 # destacar a palavra encontrada permanentemente
                 self.celulas_destacadas[c] = COR_ACHADA
-            print("Correto: ", palavra)
 
             # limpar as células selecionadas
         self.celulas_selecionadas.clear()
         self.desenhar() # ataualizar a tela
+
+        self.atualizar_lista_palavras(palavra if palavra in self.lista_palavras else palavra[::-1])
+
+    # excluir palavras que já foram encontradas
+    def atualizar_lista_palavras(self, palavra_encontrda):
+        self.palavras_exibidas.config(state="normal")
+        
+        start = "1.0"
+        pos = self.palavras_exibidas.search(palavra_encontrda, start, stopindex="end")
+        if pos:
+            end = f"{pos} + {len(palavra_encontrda)}c"
+            self.palavras_exibidas.tag_add("encontrada", pos, end)
+            self.palavras_exibidas.tag_config("encontrada", foreground="green",
+                                              font=("Arial", 12, "bold"))
+            
+            self.palavras_exibidas.config(state="disabled")
