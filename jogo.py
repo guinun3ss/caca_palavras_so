@@ -48,9 +48,29 @@ def jogo_versao_hardware(matriz):
     adicionar_palavra(matriz, "SLOT", "horizontal", 13, 0)
 
     return palavras_procuradas
+
+def jogo_versao_historia(matriz):
+    palavras_procuradas = {"VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
+                           "MACINTOSH", "MAINFRAME", "ASSEMBLY", "MICROPROCESSADOR",
+                           "APPLE", "FORTRAN", "WINDOWS", "GUI"}
+    
+    adicionar_palavra(matriz, "MICROPROCESSADOR", "horizontal", 2, 2)
+    adicionar_palavra(matriz, "TRANSISTOR", "vertical", 1, 5)
+    adicionar_palavra(matriz, "ASSEMBLY", "vertical", 0, 22)
+    adicionar_palavra(matriz, "APPLE", "vertical", 4, 20)
+    adicionar_palavra(matriz, "MACINTOSH", "horizontal", 12, 3)
+    adicionar_palavra(matriz, "MAINFRAME", "vertical", 8, 18)
+    adicionar_palavra(matriz, "ENIAC", "horizontal", 10, 16)
+    adicionar_palavra(matriz, "FORTRAN", "horizontal", 15, 0)
+    adicionar_palavra(matriz, "WINDOWS", "horizontal", 18, 15)
+    adicionar_palavra(matriz, "UNIX", "vertical", 20, 2)
+    adicionar_palavra(matriz, "GUI", "vertical", 21, 14)
+    adicionar_palavra(matriz, "VÁLVULA", "horizontal", 22, 10)
+
+    return palavras_procuradas
     
 # aqui o tema é escolhido aleatoriamente
 def posicionar_palavras(matriz):
-    variacoes = [jogo_versao_hardware]
+    variacoes = [jogo_versao_hardware, jogo_versao_historia]
     versao = choice(variacoes)
     return versao(matriz)
