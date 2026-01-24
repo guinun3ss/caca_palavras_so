@@ -30,9 +30,9 @@ def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
 
 # variações dos jogos que serão escolhidas aleatoriamente
 def jogo_versao_hardware(matriz):
-    palavras_procuradas = {"PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
+    palavras_procuradas = ["PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
                            "DISCO", "TECLADO", "MOUSE", "MONITOR", 
-                           "GABINETE", "COOLER", "BARRAMENTO", "SLOT"}
+                           "GABINETE", "COOLER", "BARRAMENTO", "SLOT"]
     
     adicionar_palavra(matriz, "PLACA", "vertical", 20, 20)
     adicionar_palavra(matriz, "FONTE", "vertical", 1, 4)
@@ -50,9 +50,9 @@ def jogo_versao_hardware(matriz):
     return palavras_procuradas
 
 def jogo_versao_historia(matriz):
-    palavras_procuradas = {"VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
+    palavras_procuradas = ["VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
                            "MACINTOSH", "MAINFRAME", "ASSEMBLY", "MICROPROCESSADOR",
-                           "APPLE", "FORTRAN", "WINDOWS", "GUI"}
+                           "APPLE", "FORTRAN", "WINDOWS", "GUI"]
     
     adicionar_palavra(matriz, "MICROPROCESSADOR", "horizontal", 2, 2)
     adicionar_palavra(matriz, "TRANSISTOR", "vertical", 1, 5)
@@ -70,9 +70,9 @@ def jogo_versao_historia(matriz):
     return palavras_procuradas
 
 def jogo_versao_sistema(matriz):
-    palavras_procuradas = {"TERMINAL", "EMBARCADO", "FIRMWARE", "INTERRUPÇÃO",
+    palavras_procuradas = ["TERMINAL", "EMBARCADO", "FIRMWARE", "INTERRUPÇÃO",
                            "THREAD", "DRIVER", "PROCESSO", "BUFFER",
-                           "BOOT", "KERNEL", "BIOS", "ESCALONADOR"}
+                           "BOOT", "KERNEL", "BIOS", "ESCALONADOR"]
     
     adicionar_palavra(matriz, "TERMINAL", "horizontal", 0, 4)
     adicionar_palavra(matriz, "EMBARCADO", "vertical", 2, 20)
@@ -90,9 +90,9 @@ def jogo_versao_sistema(matriz):
     return palavras_procuradas
 
 def jogo_versao_linguagens(matriz):
-    palavras_procuradas = {"PYTHON", "JAVA", "LUA", "TYPESCRIPT",
+    palavras_procuradas = ["PYTHON", "JAVA", "LUA", "TYPESCRIPT",
                            "COBOL", "PHP", "SWIFT", "KOTLIN", 
-                           "RUST", "RUBY", "ASSEMBLY", "FORTRAN"}
+                           "RUST", "RUBY", "ASSEMBLY", "FORTRAN"]
     
     adicionar_palavra(matriz, "COBOL", "vertical", 0, 18)
     adicionar_palavra(matriz, "TYPESCRIPT", "horizontal", 2, 2)
@@ -108,10 +108,7 @@ def jogo_versao_linguagens(matriz):
     adicionar_palavra(matriz, "SWIFT", "horizontal", 22, 2)
 
     return palavras_procuradas
-    
-# aqui o tema é escolhido aleatoriamente
-def posicionar_palavras(matriz):
-    variacoes = [jogo_versao_hardware, jogo_versao_historia,
-                 jogo_versao_sistema, jogo_versao_linguagens]
-    versao = choice(variacoes)
-    return versao(matriz)
+
+# sistema de fases, para mudar o tema conforme o jogador avança
+FASES = [jogo_versao_hardware, jogo_versao_historia,
+         jogo_versao_sistema, jogo_versao_linguagens]
