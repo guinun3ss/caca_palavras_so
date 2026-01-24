@@ -68,9 +68,50 @@ def jogo_versao_historia(matriz):
     adicionar_palavra(matriz, "VÁLVULA", "horizontal", 22, 10)
 
     return palavras_procuradas
+
+def jogo_versao_sistema(matriz):
+    palavras_procuradas = {"TERMINAL", "EMBARCADO", "FIRMWARE", "INTERRUPÇÃO",
+                           "THREAD", "DRIVER", "PROCESSO", "BUFFER",
+                           "BOOT", "KERNEL", "BIOS", "ESCALONADOR"}
+    
+    adicionar_palavra(matriz, "TERMINAL", "horizontal", 0, 4)
+    adicionar_palavra(matriz, "EMBARCADO", "vertical", 2, 20)
+    adicionar_palavra(matriz, "FIRMWARE", "horizontal", 5, 2)
+    adicionar_palavra(matriz, "INTERRUPÇÃO", "vertical", 7, 3)
+    adicionar_palavra(matriz, "THREAD", "vertical", 8, 13)
+    adicionar_palavra(matriz, "DRIVER", "horizontal", 10, 12)
+    adicionar_palavra(matriz, "PROCESSO", "horizontal", 19, 5)
+    adicionar_palavra(matriz, "BUFFER", "vertical", 15, 9)
+    adicionar_palavra(matriz, "BOOT", "vertical", 16, 14)
+    adicionar_palavra(matriz, "KERNEL", "horizontal", 18, 18)
+    adicionar_palavra(matriz, "BIOS", "horizontal", 20, 2)
+    adicionar_palavra(matriz, "ESCALONADOR", "horizontal", 22, 5)
+
+    return palavras_procuradas
+
+def jogo_versao_linguagens(matriz):
+    palavras_procuradas = {"PYTHON", "JAVA", "LUA", "TYPESCRIPT",
+                           "COBOL", "PHP", "SWIFT", "KOTLIN", 
+                           "RUST", "RUBY", "ASSEMBLY", "FORTRAN"}
+    
+    adicionar_palavra(matriz, "COBOL", "vertical", 0, 18)
+    adicionar_palavra(matriz, "TYPESCRIPT", "horizontal", 2, 2)
+    adicionar_palavra(matriz, "ASSEMBLY", "vertical", 5, 15) 
+    adicionar_palavra(matriz, "RUBY", "vertical", 5, 20)
+    adicionar_palavra(matriz, "RUST", "horizontal", 6, 13)
+    adicionar_palavra(matriz, "LUA", "horizontal", 8, 7)
+    adicionar_palavra(matriz, "PYTHON", "vertical", 8, 3)
+    adicionar_palavra(matriz, "JAVA", "vertical", 14, 10)
+    adicionar_palavra(matriz, "FORTRAN", "horizontal", 15, 5)
+    adicionar_palavra(matriz, "PHP", "horizontal", 15, 19)
+    adicionar_palavra(matriz, "KOTLIN", "horizontal", 18, 15)
+    adicionar_palavra(matriz, "SWIFT", "horizontal", 22, 2)
+
+    return palavras_procuradas
     
 # aqui o tema é escolhido aleatoriamente
 def posicionar_palavras(matriz):
-    variacoes = [jogo_versao_hardware, jogo_versao_historia]
+    variacoes = [jogo_versao_hardware, jogo_versao_historia,
+                 jogo_versao_sistema, jogo_versao_linguagens]
     versao = choice(variacoes)
     return versao(matriz)
