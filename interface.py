@@ -1,11 +1,16 @@
 import tkinter as tk
+from tkinter import messagebox
 from configuracoes import *
-from jogo import gerar_matriz, posicionar_palavras
+from jogo import gerar_matriz, FASES
 
 class Jogo:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Caça-Palavras Temático")
+
+        self.fases = FASES
+        self.indice_fase = 0
+        self.contador_palavras_encontradas = 0 # conta as palavras encontradas
 
         # dividir a tela entre a matriz e o texto
         frame_principal = tk.Frame(janela)
@@ -16,20 +21,11 @@ class Jogo:
                                 height=ALTURA_JANELA, bg=COR_FUNDO)
         self.canvas.pack(side="left") # e o pack coloca tudo na janela
 
-        self.matriz = gerar_matriz()
-        self.lista_palavras = posicionar_palavras(self.matriz)
-
-        # exibir palavras a serem encontradas no jogo
-        palavras_jogo = "\n".join(self.lista_palavras)
+        # exibir palavras a serem encontradas
         self.palavras_exibidas = tk.Text(frame_principal, wrap="word",
                                         font=("Arial", 11), width=25,
-                                        height=len(self.lista_palavras) + 2,
-                                        relief="flat")
+                                        height=15, relief="flat")
         self.palavras_exibidas.pack(side="right", padx=10)
-
-        for palavra in self.lista_palavras:
-            self.palavras_exibidas.insert("end", palavra + "\n")
-
         self.palavras_exibidas.config(state="disabled")
 
         self.celulas_destacadas = {} # palavras selecionadas corretamente
@@ -45,31 +41,33 @@ class Jogo:
         self.canvas.bind("<B1-Motion>", self.movimento_mouse) # quando o ponteiro é movido
         self.canvas.bind("<ButtonRelease-1>", self.soltar_botao_mouse) # quando o botão é solto
 
+        self.iniciar_fase()
+
+    # iniciar nova fase com tudo zerado
+    def iniciar_fase(self):
+        self.celulas_destacadas = {}
+        self.celulas_selecionadas = []
+        self.contador_palavras_encontradas = 0
+        
+        self.matriz = gerar_matriz()
+
+        # só muda quando o índice da fase é incrementado
+        fase_atual = self.fases[self.indice_fase]
+        self.lista_palavras = fase_atual(self.matriz)
+
+        # atualiza a interface para a nova fase
+        self.palavras_exibidas.config(state="normal")
+        self.palavras_exibidas.delete("1.0", "end")
+        for p in self.lista_palavras:
+            self.palavras_exibidas.insert("end", p + "\n")
+        self.palavras_exibidas.config(state="disabled")
+
+        # e o título da janela
+        self.janela.title(f"Caça-Palavras - Fase {self.indice_fase + 1} de {len(self.fases)}")
         self.desenhar()
 
     def desenhar(self): # renderização do estado atual do jogo
         self.canvas.delete("all")
-
-        # desenhar os números fora da grade
-        # NÃO FAZ PARTE DO JOGO, APAGAR DEPOIS
-        for c in range(TAMANHO_MATRIZ):
-            x = MARGEM + c * TAMANHO_CELULA + TAMANHO_CELULA // 2
-            y = MARGEM // 2   # posição acima da grade
-            self.canvas.create_text(x, y, text=str(c), font=("Arial", 10, "bold"), fill="black")
-
-        for l in range(TAMANHO_MATRIZ):
-            x = MARGEM // 2   # posição à esquerda da grade
-            y = MARGEM + l * TAMANHO_CELULA + TAMANHO_CELULA // 2
-            self.canvas.create_text(x, y, text=str(l), font=("Arial", 10, "bold"), fill="black")
-
-        for l in range(TAMANHO_MATRIZ):
-            x = MARGEM // 2
-            y = MARGEM + l * TAMANHO_CELULA + TAMANHO_CELULA // 2
-
-            self.canvas.create_text(x, y, text=str(l),
-                                     font=("Arial", 10, "bold"),
-                                     fill="black")
-
         # um quadrado é desenhado na grade para cada célula
         for l in range(TAMANHO_MATRIZ):
             for c in range(TAMANHO_MATRIZ):
@@ -150,7 +148,7 @@ class Jogo:
 
         palavra = "".join(self.matriz[l][c] for l, c in self.celulas_selecionadas)
 
-        if palavra in PALAVRAS or palavra[::-1] in PALAVRAS:
+        if palavra in self.lista_palavras or palavra[::-1] in self.lista_palavras:
             for c in self.celulas_selecionadas:
                 # destacar a palavra encontrada permanentemente
                 self.celulas_destacadas[c] = COR_ACHADA
@@ -168,9 +166,23 @@ class Jogo:
         start = "1.0"
         pos = self.palavras_exibidas.search(palavra_encontrda, start, stopindex="end")
         if pos:
-            end = f"{pos} + {len(palavra_encontrda)}c"
-            self.palavras_exibidas.tag_add("encontrada", pos, end)
-            self.palavras_exibidas.tag_config("encontrada", foreground="green",
-                                              font=("Arial", 12, "bold"))
+            tags = self.palavras_exibidas.tag_names(pos)
+            if "encontrada" not in tags:
+                end = f"{pos} + {len(palavra_encontrda)}c"
+                self.palavras_exibidas.tag_add("encontrada", pos, end)
+                self.palavras_exibidas.tag_config("encontrada", foreground="green",
+                                                font=("Arial", 12, "bold"))
+                
+                self.contador_palavras_encontradas += 1
+
+                # lógica para avançar de fase
+                if self.contador_palavras_encontradas == len(self.lista_palavras):
+                    self.indice_fase += 1
+                    if self.indice_fase < len(self.fases):
+                        messagebox.showinfo("Parabéns!", "Fase concluída! Vamos para a próxima!")
+                        self.iniciar_fase() # o jogador avança aqui
+                    else:
+                        messagebox.showinfo("Parabéns!", "Você completou todas as fases!")
+                        self.janela.quit() # se não tiver mais fases, o jogo cai aqui
             
             self.palavras_exibidas.config(state="disabled")
