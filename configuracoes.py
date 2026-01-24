@@ -24,4 +24,9 @@ PALAVRAS = {"PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
             "VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
             "MACINTOSH", "MAINFRAME", "ASSEMBLY",
             "MICROPROCESSADOR", "APPLE", "FORTRAN",
-            "WINDOWS", "GUI"}
+            "WINDOWS", "GUI", "TERMINAL", "EMBARCADO",
+            "FIRMWARE", "INTERRUPÇÃO", "THREAD", "DRIVER",
+            "PROCESSO", "BUFFER", "BOOT", "KERNEL", 
+            "BIOS", "ESCALONADOR", "PYTHON", "JAVA",
+            "LUA", "TYPESCRIPT", "COBOL", "PHP",
+            "SWIFT", "KOTLIN", "RUST", "RUBY"}

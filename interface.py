@@ -22,7 +22,7 @@ class Jogo:
         # exibir palavras a serem encontradas no jogo
         palavras_jogo = "\n".join(self.lista_palavras)
         self.palavras_exibidas = tk.Text(frame_principal, wrap="word",
-                                        font=("Arial", 11), width=22,
+                                        font=("Arial", 11), width=25,
                                         height=len(self.lista_palavras) + 2,
                                         relief="flat")
         self.palavras_exibidas.pack(side="right", padx=10)
