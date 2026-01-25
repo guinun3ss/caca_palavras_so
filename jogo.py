@@ -1,39 +1,32 @@
-from random import choice
+from random import choice # para sortear as letras da matriz
 from configuracoes import TAMANHO_MATRIZ, LETRAS
 
 def gerar_matriz():
-    # cada linha da matriz é um list comprehension da constante LETRAS
+    # cada linha da matriz é um list comprehension aleatório de LETRAS
     matriz = [[choice(LETRAS) for i in range(TAMANHO_MATRIZ)]
               for j in range(TAMANHO_MATRIZ)]
     return matriz
 
-# aqui o resultado deve ser um booleano para confirmar a adição
-def cabe_na_matriz(palavra, direcao, linha, coluna):
-    if direcao == "horizontal":
-        return coluna + len(palavra) <= TAMANHO_MATRIZ
-    if direcao == "vertical":
-        return linha + len(palavra) <= TAMANHO_MATRIZ
-    return False
-
-# e aqui a palavra é de fato adicionada à matriz
+# aqui as palavras são posicionadas no meio das letras aleatórias
+# é preciso calcular as posições e direções para evitar a sobreposição
 def adicionar_palavra(matriz, palavra, direcao, linha, coluna):
-    if not cabe_na_matriz(palavra, direcao, linha, coluna):
-        return 
-    
-    for i, letra in enumerate(palavra):
+    # a palavra é desmembrada
+    # e cada letra dela substitui uma letra aleatória
+    for i, letra in enumerate(palavra): # o i avança para a próxima linha/coluna
         if direcao == "horizontal":
-            # percorre as colunas de uma em uma
             matriz[linha][coluna + i] = letra
         elif direcao == "vertical":
-            # percorre as linhas de uma em uma
             matriz[linha + i][coluna] = letra
 
-# variações dos jogos que serão escolhidas aleatoriamente
+# cada uma dessas funções corresponde a uma fase do jogo
 def jogo_versao_hardware(matriz):
+    # e essa lista é para informar ao jogador as palavras que deve achar
     palavras_procuradas = ["PLACA", "FONTE", "MEMÓRIA", "PROCESSADOR",
                            "DISCO", "TECLADO", "MOUSE", "MONITOR", 
                            "GABINETE", "COOLER", "BARRAMENTO", "SLOT"]
     
+    # aqui as palavras são posicionadas de fato
+    # como mencionado, precisa calcular com precisão as posições
     adicionar_palavra(matriz, "PLACA", "vertical", 20, 20)
     adicionar_palavra(matriz, "FONTE", "vertical", 1, 4)
     adicionar_palavra(matriz, "MEMÓRIA", "horizontal", 15, 10)
@@ -49,6 +42,7 @@ def jogo_versao_hardware(matriz):
 
     return palavras_procuradas
 
+# mais uma fase
 def jogo_versao_historia(matriz):
     palavras_procuradas = ["VÁLVULA", "ENIAC", "TRANSISTOR", "UNIX",
                            "MACINTOSH", "MAINFRAME", "ASSEMBLY", "MICROPROCESSADOR",
@@ -69,6 +63,7 @@ def jogo_versao_historia(matriz):
 
     return palavras_procuradas
 
+# outra fase
 def jogo_versao_sistema(matriz):
     palavras_procuradas = ["TERMINAL", "EMBARCADO", "FIRMWARE", "INTERRUPÇÃO",
                            "THREAD", "DRIVER", "PROCESSO", "BUFFER",
@@ -89,6 +84,7 @@ def jogo_versao_sistema(matriz):
 
     return palavras_procuradas
 
+# fase final
 def jogo_versao_linguagens(matriz):
     palavras_procuradas = ["PYTHON", "JAVA", "LUA", "TYPESCRIPT",
                            "COBOL", "PHP", "SWIFT", "KOTLIN", 
@@ -109,6 +105,6 @@ def jogo_versao_linguagens(matriz):
 
     return palavras_procuradas
 
-# sistema de fases, para mudar o tema conforme o jogador avança
+# essa lista vai ser usada para avançar as fases
 FASES = [jogo_versao_hardware, jogo_versao_historia,
          jogo_versao_sistema, jogo_versao_linguagens]
