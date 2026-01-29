@@ -164,14 +164,14 @@ class Jogo:
                 # destacar a palavra encontrada permanentemente
                 # se a palavra existir na lista
                 self.celulas_destacadas[c] = COR_ACHADA
+            
+            palavra_correta = palavra if palavra in self.lista_palavras else palavra[::-1]
+            self.atualizar_lista_palavras(palavra_correta)
 
         # limpar as células selecionadas
         # só as que tem palavras persistem
         self.celulas_selecionadas.clear()
         self.desenhar() # ataualizar a tela
-
-        # e pinta as palavras que já foram encontradas para guiar o usuário
-        self.atualizar_lista_palavras(palavra if palavra in self.lista_palavras else palavra[::-1])
 
     # pinta de verde as palavras que já foram encontradas
     def atualizar_lista_palavras(self, palavra_encontrda):
